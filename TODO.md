@@ -44,3 +44,4 @@
 - [x] a way for restful authentication
 - [x] fix space in file name problem
 - [x] show "waiting for calculation" in logs, when dropping the old ones after upload
+- [ ] DevOps and DevSecOps 
