@@ -256,6 +256,7 @@ def health_check():
 def get_database_connection():
     """connects to the MySQL database and returns the connection"""
     return MySQLdb.connect(host=config.MYSQL_HOST,
+                           port=config.MYSQL_PORT,
                            user=config.MYSQL_USERNAME,
                            passwd=config.MYSQL_PASSWORD,
                            db=config.MYSQL_DB_NAME,

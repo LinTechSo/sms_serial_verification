@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+    db:
+        image: mysql:8.0.13
+        expose:
+            - 3306
+        container_name: db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_USER: "${MYSQL_ROOT_USER}"
+            MYSQL_USERNAME: "${MYSQL_USERNAME}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+        volumes:
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+            - dbdata:/var/lib/mysql
+        command:  "--default-authentication-plugin=mysql_native_password"
+        networks:
+            - app-network
+
+    flask:
+        depends_on:
+            - db
+        build: .
+        container_name: app
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        networks:
+            - app-network
+    
+volumes:
+    dbdata:
+
+networks:
+    app-network:
+        driver: bridge
